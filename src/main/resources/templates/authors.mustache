@@ -1,0 +1,22 @@
+<html>
+<body>
+<div>
+    <form method="post" action="main">
+        <button type="submit">На главную</button>
+    </form>
+    <form method="post" action="author">
+        <input type="text" name="filter"/>
+        <button type="submit">Найти автора</button>
+    </form>
+</div>
+<div>Список авторов</div>
+{{#authors}}
+<div>
+    <form method="post" action="addbook">
+        <input type="hidden" name="authorid" value="{{id}}"/>
+        <button type="submit">{{name}}</button>
+    </form>
+</div>
+{{/authors}}
+</body>
+</html>
