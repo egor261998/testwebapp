@@ -1,6 +1,7 @@
-package com.example.domain;
+package com.example.domain.entity;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,4 +48,20 @@ public class Author {
     public Author(String name) {
         this.name = name;
     }
+
+    public static Comparator<Author> NameComparator
+            = new Comparator<Author>() {
+
+        public int compare(Author author1, Author author2) {
+
+            String Name1 = author1.getName().toUpperCase();
+            String Name2 = author2.getName().toUpperCase();
+
+            //ascending order
+            return Name1.compareTo(Name2);
+
+            //descending order
+            // return Name2.compareTo(Name1);
+        }
+    };
 }
