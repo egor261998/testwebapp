@@ -1,22 +1,27 @@
 <html>
+<head>
+    <link type="text/css" href="css/css.css" rel="stylesheet"/>
+</head>
 <body>
-<div>
-    <form method="post" action="main">
-        <button type="submit">На главную</button>
-    </form>
-    <form method="post" action="book">
-        <input type="text" name="filter"/>
-        <button type="submit">Найти книгу</button>
-    </form>
+<div class="block">
+    <div>
+        <form method="post" action="main">
+            <button type="submit">На главную</button>
+        </form>
+        <form method="post" action="book">
+            <input type="text" name="filter" placeholder="Найти книгу"/>
+            <button type="submit">Найти книгу</button>
+        </form>
+    </div>
+    <h3>Список книг:</h3>
+    {{#books}}
+    <div>
+        <form method="post" action="addauthor">
+            <input type="hidden" name="bookid" value="{{id}}"/>
+            <button type="submit">{{name}}</button>
+        </form>
+    </div>
+    {{/books}}
 </div>
-<div>Список книг</div>
-{{#books}}
-<div>
-    <form method="post" action="addauthor">
-        <input type="hidden" name="bookid" value="{{id}}"/>
-        <button type="submit">{{name}}</button>
-    </form>
-</div>
-{{/books}}
 </body>
 </html>

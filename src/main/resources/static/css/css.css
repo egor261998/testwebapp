@@ -1,0 +1,41 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background: #333333;
+    color: #FFF;
+}
+
+.block {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    top: 20%;
+    left: 50%;
+    margin: -125px 0 0 -125px;
+
+}
+
+h3 {
+    color: #FFA812;
+}
+
+input {
+    width: 200px;
+    height: 35px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #333333;
+    color: white;
+    border: 2px solid #FFA812;
+    width: 200px;
+    height: 35px;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #FFA812;
+    color: white;
+}
