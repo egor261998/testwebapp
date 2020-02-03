@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface BookRepo extends CrudRepository<Book, Integer> {
     List<Book> findByName(String text);
+    List<Book> findFirst10ByOrderByIdDesc();
     Book findBookByName(String name);
     Book findById(int id);
 

@@ -23,7 +23,7 @@ public class BookController {
     @PostMapping("last")
     public String post_last(Model model) {
 
-        List<Book> books = BookDriver.GetBooks(bookRepo,null);
+        List<Book> books = BookDriver.GetLastBooks(bookRepo);
         model.addAttribute("books",  books);
 
         return "last";

@@ -28,6 +28,11 @@ public class BookDriver {
         return booklist;
     }
 
+    public static List<Book> GetLastBooks(BookRepo bookRepo)
+    {
+        return bookRepo.findFirst10ByOrderByIdDesc();
+    }
+
     public static Book AddNewBook(BookRepo bookRepo, String name)
     {
         Book book = bookRepo.findBookByName(name);
