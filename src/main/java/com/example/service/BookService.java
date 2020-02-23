@@ -6,7 +6,6 @@ import com.example.repo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -24,13 +23,12 @@ public class BookService {
         Iterable<Book> books;
 
         if(filter!=null && !filter.isEmpty())
-            books = bookRepo.findByName(filter);
+            books = bookRepo.findByNameOrderByNameAsc(filter);
         else
-            books = bookRepo.findAll();
+            books = bookRepo.findAllByOrderByNameAsc();
 
         List<Book> booklist =new ArrayList<>();
         books.forEach(booklist::add);
-        Collections.sort(booklist, Book.NameComparator);
 
         return booklist;
     }

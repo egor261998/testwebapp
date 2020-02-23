@@ -7,7 +7,6 @@ import com.example.repo.BookRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -26,13 +25,12 @@ public class AuthorService {
         Iterable<Author> authors;
 
         if(filter!=null && !filter.isEmpty())
-            authors = authorRepo.findByName(filter);
+            authors = authorRepo.findByNameOrderByNameAsc(filter);
         else
-            authors = authorRepo.findAll();
+            authors = authorRepo.findAllByOrderByNameDesc();
 
         List<Author> authorlist =new ArrayList<>();
         authors.forEach(authorlist::add);
-        Collections.sort(authorlist, Author.NameComparator);
 
         return authorlist;
     }
