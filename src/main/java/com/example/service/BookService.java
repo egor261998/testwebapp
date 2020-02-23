@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.Exception.NotFoundException;
 import com.example.domain.entity.Author;
 import com.example.domain.entity.Book;
 import com.example.repo.*;
@@ -43,7 +44,7 @@ public class BookService {
         Book book = bookRepo.findBookByName(name);
 
         if(book!=null)
-            return book;
+            throw new NotFoundException("Книга уже добавлена");
 
         book = new Book(name);
         bookRepo.save(book);
