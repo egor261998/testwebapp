@@ -1,6 +1,6 @@
 <html>
 <head>
-    <link type="text/css" href="css/css.css" rel="stylesheet"/>
+    <link type="text/css" href="../../../static/css/css.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="block">
@@ -8,8 +8,12 @@
         <form method="post" action="main">
             <button type="submit">На главную</button>
         </form>
+        <form method="post" action="book">
+            <input type="text" name="filter" placeholder="Найти книгу"/>
+            <button type="submit">Найти книгу</button>
+        </form>
     </div>
-    <h3>Последние 10 книг</h3>
+    <h3>Список книг:</h3>
     {{#books}}
     <div>
         <form method="post" action="addauthor">

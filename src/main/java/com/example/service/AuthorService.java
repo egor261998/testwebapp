@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.Exception.NotFoundException;
 import com.example.domain.entity.Author;
 import com.example.domain.entity.Book;
 import com.example.repo.AuthorRepo;
@@ -20,6 +21,7 @@ public class AuthorService {
         this.bookRepo = bookRepo;
     }
 
+    //Получить список авторов из бд.
     public List<Author> GetAuthors(String filter)
     {
         Iterable<Author> authors;
@@ -27,7 +29,7 @@ public class AuthorService {
         if(filter!=null && !filter.isEmpty())
             authors = authorRepo.findByNameOrderByNameAsc(filter);
         else
-            authors = authorRepo.findAllByOrderByNameDesc();
+            authors = authorRepo.findAllByOrderByNameAsc();
 
         List<Author> authorlist =new ArrayList<>();
         authors.forEach(authorlist::add);
@@ -35,31 +37,31 @@ public class AuthorService {
         return authorlist;
     }
 
+    //Информация об авторе.
     public Author AddBookPage(String authorid)
     {
         return authorRepo.findById(Integer.parseInt(authorid));
     }
 
-    public Author AddBookToAuthor(String authorid, String name)
+    //Добавить книгу к автору.
+    public Author AddBookToAuthor(String authorid, String bookname)
     {
-        Book book= bookRepo.findAuthorByName(name);
+        //получаем книгу из бд
+        Book book = bookRepo.findBookByName(bookname);
         Author author = authorRepo.findById(Integer.parseInt(authorid));
+        if(book==null)
+            throw new NotFoundException("Книга не существует, сначала добавте ее.");
 
         if(author==null)
-            return null;
+            throw new NotFoundException("Автор не существует.");
 
+        //теперь можно вписать автора в кингу.
         Set<Book> books = author.getBooks();
-        if(book!=null && !books.contains(book))
-            books.add(book);
-        else
-        {
-            book = new Book(name);
-            bookRepo.save(book);
-            books.add(book);
-        }
-
+        books.add(book);
         author.setBooks(books);
         authorRepo.save(author);
+
+        //а книге добавим автора
         Set<Author> authors = book.getAuthors();
         authors.add(author);
         book.setAuthors(authors);

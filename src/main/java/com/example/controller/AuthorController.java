@@ -14,24 +14,27 @@ public class AuthorController {
         this.service = service;
     }
 
+    //вывести список авторов
     @PostMapping("author")
     public String post_author(@RequestParam String filter, Model model) {
         model.addAttribute("authors", service.GetAuthors(filter));
 
-        return "authors";
+        return "AuthorPages/authors";
     }
 
+    //информация об авторе
     @PostMapping("addbook")
     public String post_addbook(@RequestParam String authorid, Model model) {
         model.addAttribute("author", service.AddBookPage(authorid));
 
-        return "authorid";
+        return "AuthorPages/authorid";
     }
 
+    //добавить книгу к автору.
     @PostMapping("addbooktoauthor")
     public String post_book_to_addauthor(@RequestParam String authorid, @RequestParam String name, Model model) {
         model.addAttribute("author", service.AddBookToAuthor(authorid, name));
 
-        return "authorid";
+        return "AuthorPages/authorid";
     }
 }

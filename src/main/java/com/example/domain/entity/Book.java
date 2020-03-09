@@ -18,6 +18,10 @@ public class Book {
 
     public Book() { }
 
+    public Book(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -41,26 +45,4 @@ public class Book {
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
-
-    public Book(String name) {
-        this.name = name;
-    }
-
-    public static Comparator<Book> NameComparator
-            = new Comparator<Book>() {
-
-        public int compare(Book book1, Book book2) {
-
-            String Name1 = book1.getName().toUpperCase();
-            String Name2 = book2.getName().toUpperCase();
-
-            //ascending order
-            return Name1.compareTo(Name2);
-
-            //descending order
-            // return Name2.compareTo(Name1);
-        }
-    };
-
-
 }

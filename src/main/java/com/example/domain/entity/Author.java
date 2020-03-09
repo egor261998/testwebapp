@@ -17,9 +17,14 @@ public class Author {
     @JoinTable(name="author_book",
             joinColumns={@JoinColumn(name="author_id")},
             inverseJoinColumns={@JoinColumn(name="book_id")})
+
     private Set<Book> books = new HashSet<Book>();
 
     public Author() { }
+
+    public Author(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -44,24 +49,4 @@ public class Author {
     public void setBooks(Set<Book> books) {
         this.books = books;
     }
-
-    public Author(String name) {
-        this.name = name;
-    }
-
-    public static Comparator<Author> NameComparator
-            = new Comparator<Author>() {
-
-        public int compare(Author author1, Author author2) {
-
-            String Name1 = author1.getName().toUpperCase();
-            String Name2 = author2.getName().toUpperCase();
-
-            //ascending order
-            return Name1.compareTo(Name2);
-
-            //descending order
-            // return Name2.compareTo(Name1);
-        }
-    };
 }

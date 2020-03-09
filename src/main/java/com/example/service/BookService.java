@@ -19,6 +19,8 @@ public class BookService {
         this.authorRepo = authorRepo;
         this.bookRepo = bookRepo;
     }
+
+    //Получить список книг из бд.
     public List<Book> GetBooks(String filter)
     {
         Iterable<Book> books;
@@ -34,11 +36,13 @@ public class BookService {
         return booklist;
     }
 
-    public List<Book> GetLastBooks()
+    //Получить последние 10 добавленных книг.
+    public List<Book> GetLast10Books()
     {
         return bookRepo.findFirst10ByOrderByIdDesc();
     }
 
+    //Добавить новую книгу
     public Book AddNewBook(String name)
     {
         Book book = bookRepo.findBookByName(name);
@@ -52,31 +56,36 @@ public class BookService {
         return book;
     }
 
+    //Информация о книге.
     public Book AddAuthorPage(String bookid)
     {
         return bookRepo.findById(Integer.parseInt(bookid));
     }
 
-    public Book AddAuthorToBook(String bookid, String name)
+    //Добавить автора к книге.
+    public Book AddAuthorToBook(String bookid, String nameauthor)
     {
-        Author author = authorRepo.findAuthorByName(name);
+        Author author = authorRepo.findAuthorByName(nameauthor);
+
+        if(author==null)
+        {
+            //создаем автора
+            author = new Author(nameauthor);
+            authorRepo.save(author);
+        }
+
         Book book = bookRepo.findById(Integer.parseInt(bookid));
 
         if(book==null)
-            return null;
+            throw new NotFoundException("Книга не существует, сначала добавте ее.");
 
+        //теперь можно книге добавить автора.
         Set<Author> authors = book.getAuthors();
-        if(author!=null && !authors.contains(author))
-            authors.add(author);
-        else
-        {
-            author = new Author(name);
-            authorRepo.save(author);
-            authors.add(author);
-        }
-
+        authors.add(author);
         book.setAuthors(authors);
         bookRepo.save(book);
+
+        //а автору добавить книгу
         Set<Book> books = author.getBooks();
         books.add(book);
         author.setBooks(books);

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MainController {
     @GetMapping
     public String get_main(Model model) {
-        return "main";
+        return "main/main";
     }
 
     @PostMapping("main")
     public String post_main(Model model) {
-        return "main";
+        return "main/main";
     }
 }
