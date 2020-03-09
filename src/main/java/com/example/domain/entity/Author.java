@@ -1,7 +1,6 @@
 package com.example.domain.entity;
 
 import javax.persistence.*;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 

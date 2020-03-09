@@ -5,10 +5,11 @@ import com.example.domain.entity.Author;
 import com.example.domain.entity.Book;
 import com.example.repo.AuthorRepo;
 import com.example.repo.BookRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -22,19 +23,26 @@ public class AuthorService {
     }
 
     //Получить список авторов из бд.
-    public List<Author> GetAuthors(String filter)
+    public Page<Author> GetAuthors(String filter,int cur, int max)
     {
-        Iterable<Author> authors;
+        Page<Author> authors;
+        Pageable pageable;
+
+        if(max==0)
+        {
+            pageable = PageRequest.of(0,10);
+        }
+        else
+        {
+            pageable = PageRequest.of((cur + 1 ) % max,10);
+        }
 
         if(filter!=null && !filter.isEmpty())
-            authors = authorRepo.findByNameOrderByNameAsc(filter);
+            authors = authorRepo.findByNameOrderByNameAsc(filter,pageable);
         else
-            authors = authorRepo.findAllByOrderByNameAsc();
+            authors = authorRepo.findAllByOrderByNameAsc(pageable);
 
-        List<Author> authorlist =new ArrayList<>();
-        authors.forEach(authorlist::add);
-
-        return authorlist;
+        return authors;
     }
 
     //Информация об авторе.

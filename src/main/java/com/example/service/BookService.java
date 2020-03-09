@@ -3,10 +3,13 @@ package com.example.service;
 import com.example.Exception.NotFoundException;
 import com.example.domain.entity.Author;
 import com.example.domain.entity.Book;
-import com.example.repo.*;
+import com.example.repo.AuthorRepo;
+import com.example.repo.BookRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,19 +24,28 @@ public class BookService {
     }
 
     //Получить список книг из бд.
-    public List<Book> GetBooks(String filter)
+    public Page<Book> GetBooks(String filter,int cur, int max)
     {
-        Iterable<Book> books;
+        Page<Book> books;
+        Pageable pageable;
+
+        if(max==0)
+        {
+            pageable = PageRequest.of(0,10);
+        }
+        else
+        {
+            pageable = PageRequest.of((cur + 1 ) % max,10);
+        }
 
         if(filter!=null && !filter.isEmpty())
-            books = bookRepo.findByNameOrderByNameAsc(filter);
+            books = bookRepo.findByNameOrderByNameAsc(filter,pageable);
         else
-            books = bookRepo.findAllByOrderByNameAsc();
+            books = bookRepo.findAllByOrderByNameAsc(pageable);
 
-        List<Book> booklist =new ArrayList<>();
-        books.forEach(booklist::add);
 
-        return booklist;
+
+        return books;
     }
 
     //Получить последние 10 добавленных книг.

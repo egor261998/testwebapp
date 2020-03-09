@@ -1,6 +1,6 @@
 <html>
 <head>
-    <link type="text/css" href="../../../static/css/css.css" rel="stylesheet" />
+    <link type="text/css" href="../css/css.css" rel="stylesheet" />
 </head>
 <body>
 <div class="block">
@@ -8,6 +8,15 @@
         <form method="post" action="main">
             <button type="submit">На главную</button>
         </form>
+
+        <h3>Кол-во страниц:{{pagemax}}</h3>
+        <h3>Текущая страниц:{{pagecur}}</h3>
+        <form method="post" action="author">
+            <input type="hidden" name="pagecur" value="{{pagecur}}"/>
+            <input type="hidden" name="pagemax" value="{{pagemax}}"/>
+            <button type="submit">Перейти на следующую страницу</button>
+        </form>
+
         <form method="post" action="author">
             <input type="text" name="filter" placeholder="Найти автора"/>
             <button type="submit">Найти автора</button>

@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.domain.entity.Book;
 import com.example.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,8 +45,17 @@ public class BookController {
     }
     //вывести список книг.
     @PostMapping("book")
-    public String post_book(@RequestParam String filter, Model model) {
-        model.addAttribute("books",  service.GetBooks(filter));
+    public String post_book(@RequestParam(name="filter" ,required = false,defaultValue = "") String filter,
+                            @RequestParam(name="pagecur" ,required = false,defaultValue = "0") Integer pagecur,
+                            @RequestParam(name="pagemax" ,required = false,defaultValue = "0") Integer pagemax,
+                            Model model) {
+
+        Page<Book> page = service.GetBooks(filter,pagecur,pagemax);
+
+
+        model.addAttribute("books",  page.getContent());
+        model.addAttribute("pagecur",page.getNumber());
+        model.addAttribute("pagemax",page.getTotalPages());
 
         return "BookPages/books";
     }
